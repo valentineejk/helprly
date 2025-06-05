@@ -16,7 +16,15 @@ install:
 
 
 create_migrations:
-	sqlx migrate add -r init
+	sqlx migrate add -r create_users_table
+	sqlx migrate add -r create_user_skills_table
+	sqlx migrate add -r create_projects_table
+	sqlx migrate add -r create_proposals_table
+	sqlx migrate add -r create_contracts_table
+	sqlx migrate add -r create_payments_table
+	sqlx migrate add -r create_reviews_table
+	sqlx migrate add -r create_messages_table
+	sqlx migrate add -r create_notifications_table
 
 migrate-up:
 	sqlx migrate run
@@ -24,15 +32,17 @@ migrate-up:
 migrate-down:
 	sqlx migrate revert
 
-stop_containers:
-	@echo "Stopping all docker containers..."
-	if [ $$(docker ps -q) ]; then \
-		echo "found and stopped containers..."; \
-		docker stop $$(docker ps -q); \
-	else \
-		echo "no active containers found..."; \
-	fi
+up:
+	docker-compose up --build
 
+down:
+	docker-compose down
+
+restart:
+	docker-compose down -v && docker-compose up --build
+
+logs:
+	docker-compose logs -f app
 
 start:
 	cargo run

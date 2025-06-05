@@ -1,0 +1,9 @@
+
+-- NOTIFICATIONS TABLE
+CREATE TABLE notifications (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  message TEXT,
+  read BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
